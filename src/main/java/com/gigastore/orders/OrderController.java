@@ -7,18 +7,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/retail")
-public class RetailController {
+@RequestMapping("/api/v1/orders")
+public class OrderController {
 
-    private DataAccessLayer dataAccessLayer;
-    private BackgroundService backgroundService;
-    private EmailService emailService;
+    private final DataAccessLayer dataAccessLayer;
+    private final BackgroundService backgroundService;
+    private final EmailService emailService;
 
-    public RetailController() {
-        this.dataAccessLayer = new DataAccessLayer();
-        this.backgroundService = new BackgroundService();
-        this.emailService = new EmailService();
+    public OrderController(
+            DataAccessLayer dataAccessLayer,
+            BackgroundService backgroundService,
+            EmailService emailService
+    ) {
+        this.dataAccessLayer = dataAccessLayer;
+        this.backgroundService = backgroundService;
+        this.emailService = emailService;
     }
+
 
     @GetMapping("/PlaceOrder/{customerId}")
     public ResponseEntity<?> placeOrder(@PathVariable int customerId, @RequestBody Order order, HttpServletRequest request) {
