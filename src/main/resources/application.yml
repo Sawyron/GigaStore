@@ -12,3 +12,5 @@ spring:
     properties:
       hibernate:
         format_sql: true
+order-confirmation:
+  host: https://email-api.example.com
