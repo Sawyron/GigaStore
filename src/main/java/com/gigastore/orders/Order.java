@@ -1,40 +1,60 @@
 package com.gigastore.orders;
 
+import com.gigastore.customers.Customer;
+import com.gigastore.products.Product;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "orders")
 public class Order {
-    private Object quantity;
-    private Object productId;
-    private Object id;
-    private int customerId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_seq_generator")
+    @SequenceGenerator(name = "orders_seq_generator", sequenceName = "orders_id_seq", allocationSize = 1)
+    private int id;
 
-    public Object getQuantity() {
-        return quantity;
-    }
+    @Column(
+            name = "quantity",
+            nullable = false
+    )
+    private int quantity;
 
-    public void setQuantity(Object quantity) {
-        this.quantity = quantity;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
-    public Object getProductId() {
-        return productId;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
-    public void setProductId(Object productId) {
-        this.productId = productId;
-    }
-
-    public Object getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Object id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
