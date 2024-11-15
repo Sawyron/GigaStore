@@ -8,12 +8,16 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/orders")
 public class OrderController {
-    private OrderPlacementService placementService;
+    private final OrderPlacementService placementService;
 
-    @GetMapping("/{customerId}")
-    public ResponseEntity<?> placeOrder(@PathVariable int customerId, @RequestBody PlaceOrderRequest order) {
-        placementService.placeOrder(customerId, order);
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public OrderController(OrderPlacementService placementService) {
+        this.placementService = placementService;
+    }
+
+    @PostMapping("/{customerId}")
+    public ResponseEntity<Integer> placeOrder(@PathVariable int customerId, @RequestBody PlaceOrderRequest order) {
+        int orderId = placementService.placeOrder(customerId, order);
+        return new ResponseEntity<>(orderId, HttpStatus.OK);
     }
 }
 

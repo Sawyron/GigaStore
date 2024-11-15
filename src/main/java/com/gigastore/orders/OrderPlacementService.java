@@ -15,8 +15,9 @@ public class OrderPlacementService {
     }
 
     @Transactional
-    public void placeOrder(int customerId, PlaceOrderRequest request) {
+    public int placeOrder(int customerId, PlaceOrderRequest request) {
         int orderId = orderService.saveOrder(customerId, request);
         emailService.sendOrderConfirmationEmail(customerId, orderId);
+        return orderId;
     }
 }
