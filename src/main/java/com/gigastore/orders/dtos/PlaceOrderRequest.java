@@ -1,4 +1,6 @@
 package com.gigastore.orders.dtos;
 
-public record PlaceOrderRequest(int productId, int quantity) {
+import jakarta.validation.constraints.Positive;
+
+public record PlaceOrderRequest(@Positive int productId, @Positive int quantity) {
 }
